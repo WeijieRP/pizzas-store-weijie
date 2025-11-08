@@ -1,13 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import Spinaci from "./assert/pizzas/spinaci.jpg";
 import "./index.css";
+
 import Header from "./Component/Header";
 import Menu from "./Component/Menu";
-import Pizza from "./Pizza";
-import PizzaMenu from "./Pizza";
+import PizzaMenu from "./Pizza";     // keep only this (remove 'Pizza')
 import Footer from "./Component/Footer";
-import ThemeFab from "./Component/ThemeFab";
+import ThemeFab from "./ThemeFab";   // if you added the dark-mode button
 
 const pizzaItems = [
   {
@@ -54,10 +53,11 @@ function App() {
       <Header />
       <Menu />
       <PizzaMenu pizzaArray={pizzaItems} />
-      <ThemeFab/>
-      <Footer/>
+      <Footer />
+      <ThemeFab />
     </div>
   );
 }
+
 const root = createRoot(document.getElementById("root"));
 root.render(<App />);
