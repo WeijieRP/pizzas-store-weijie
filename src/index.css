@@ -1,13 +1,351 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* -------------------- RESET -------------------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 62.5%; }
+html, body { height: 100%; }
+
+/* -------------------- THEME TOKENS -------------------- */
+:root{
+  --bg: #ffffff;
+  --text: #1b1f23;
+  --muted: #4b5563;
+  --card: #ffffff;
+  --border: rgba(0,0,0,.10);
+
+  /* Accents / header shine */
+  --grad-a: #ff8c42;       /* light header bg (if used) */
+  --grad-b: #ff3c7b;
+  --title-shine-a: #ffffff;
+  --title-shine-b: #ffd57a;
+
+  /* UI */
+  --shadow: 0 3px 10px rgba(0,0,0,.08);
+  --shadow-lg: 0 10px 24px rgba(0,0,0,.18);
+
+  color-scheme: light;
+}
+:root.dark{
+  --bg: #0b1020;
+  --text: #eaf2ff;
+  --muted: #b9c6d8;
+  --card: #0f162b;
+  --border: rgba(255,255,255,.12);
+
+  --grad-a: #202a44;       /* dark header bg (if used) */
+  --grad-b: #1a1f35;
+  --title-shine-a: #e6f0ff;
+  --title-shine-b: #8ec5ff;
+
+  --shadow: 0 0 10px rgba(255,255,255,.05);
+  --shadow-lg: 0 0 18px rgba(255,255,255,.08);
+
+  color-scheme: dark;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* -------------------- BASE -------------------- */
+body{
+  font-family: 'Roboto Mono', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 400;
+  min-height: 100vh;
+  padding: 3.2rem;
+  padding-bottom: 6rem;
+  transition: background .3s ease, color .3s ease;
+}
+
+.container{
+  max-width: 80rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4.8rem;
+}
+
+/* -------------------- PROMO BANNER (optional) -------------------- */
+.promo-banner{
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #ff8c42, #ff3c7b);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+  isolation: isolate;
+  animation: bannerSlide .6s ease-out both;
+}
+.promo-track{
+  display:flex; gap:3rem; align-items:center;
+  white-space: nowrap;
+  padding:.85rem 1.2rem;
+  font-weight:600;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  letter-spacing:.2px;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+.promo-segment{ display:inline-flex; align-items:center; gap:.5rem; }
+.promo-banner:hover .promo-track{ animation-play-state: paused; }
+
+/* -------------------- HEADER -------------------- */
+.header{ align-self: stretch; }
+.header h1{
+  color: var(--title-shine-b);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 5.2rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.header h1::before,
+.header h1::after{
+  content: '';
+  display: block;
+  height: 3px;
+  width: 12rem;
+  background-color: var(--title-shine-b);
+  position: absolute;
+  top: calc(50% - 1px);
+}
+.header h1::before{ left: 0; }
+.header h1::after{ right: 0; }
+
+/* -------------------- MENU -------------------- */
+.menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+.menu h2{
+  display: inline-block;
+  padding: 1rem 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  font-size: 2.4rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 500;
+  color: var(--text);
+}
+.menu > p{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 1.6;
+  width: 80%;
+  color: var(--muted);
+}
+
+/* -------------------- PIZZAS GRID -------------------- */
+.pizzas{
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.8rem;
+}
+@media (max-width: 720px){
+  .pizzas{ grid-template-columns: 1fr; gap: 2.4rem; }
+}
+
+/* -------------------- PIZZA CARD -------------------- */
+.pizza{
+  display: flex;
+  gap: 3.2rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+  transition: background .3s ease, color .3s ease, box-shadow .3s ease, transform .18s ease;
+}
+.pizza:hover{ box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+.pizza img{
+  width: 12rem;
+  aspect-ratio: 1;
+  align-self: start;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.pizza div{
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.4rem 0;
+}
+
+.pizza h3{
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pizza p{
+  font-size: 1.4rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: auto;
+  color: var(--muted);
+}
+
+.pizza span{
+  display: block;
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.pizza.sold-out{ opacity: 0.6; }
+.pizza.sold-out img{ filter: grayscale(); opacity: 0.8; }
+
+/* -------------------- FOOTER / ORDER -------------------- */
+.footer{
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.order{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+/* -------------------- BUTTONS -------------------- */
+.btn{
+  color: var(--text);
+  font-family: inherit;
+  border: 1px solid var(--border);
+  font-size: 1.4rem;
+  font-weight: 500;
+  background: var(--title-shine-b);
+  padding: 1.4rem 3.2rem;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.btn:hover{
+  background: var(--title-shine-a);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.theme-fab{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 5000;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: transform .18s ease, box-shadow .18s ease, background .2s, color .2s;
+}
+.theme-fab:hover{ transform: translateY(-2px); }
+.theme-fab .icon{ position:absolute; opacity:0; transition: opacity .2s ease; }
+:root:not(.dark) .theme-fab .sun{ opacity:1; }
+:root.dark .theme-fab .moon{ opacity:1; }
+
+/* -------------------- ACCESSIBILITY -------------------- */
+@media (prefers-reduced-motion: reduce){
+  .theme-fab, body, .btn, .pizza { transition: none !important; }
+  .promo-track { animation: none !important; }
+}
+
+/* -------------------- KEYFRAMES -------------------- */
+@keyframes marquee{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes bannerSlide{
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+/* ========== DARK MODE FIX PACK (append at bottom) ========== */
+
+/* 1) Make all text readable inside the menu area */
+.menu, .menu * {
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+/* Stronger heading + borders */
+.menu h2 {
+  color: var(--text) !important;
+  border-color: var(--text) !important;
+}
+
+/* Body copy contrast */
+.menu > p,
+.menu p {
+  color: var(--muted) !important;
+}
+
+/* 2) If your menu has a light gradient panel, give it a proper surface in both themes */
+.menu,
+.menu .panel,
+.menu .box,
+.menu .card,
+.menu .container-inner {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow) !important;
+  padding: 2.4rem !important;
+}
+
+/* 3) Inputs (search/filter) — make them match the theme */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+select,
+textarea,
+.search,
+.filter,
+.filter-select {
+  background: var(--card) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  padding: 1.2rem 1.6rem !important;
+  box-shadow: var(--shadow) !important;
+  outline: none !important;
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted) !important;
+  opacity: 1 !important;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--title-shine-b) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--title-shine-b) 40%, transparent) !important;
+}
+
+.pizzas { gap: 3.2rem !important; }
+.pizza { background: var(--card) !important; }
+
+.header {
+  box-shadow: 0 12px 40px rgba(0,0,0,.25) !important;
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b)) !important;
 }

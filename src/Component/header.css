@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
+
+.promo-banner{
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #ff8c42, #ff3c7b);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+  isolation: isolate;
+}
+
+.promo-banner::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background: radial-gradient(60% 180% at 20% 50%, rgba(255,255,255,.12), transparent 60%),
+              radial-gradient(60% 180% at 80% 50%, rgba(255,255,255,.12), transparent 60%);
+  mix-blend-mode: screen;
+  animation: glowPulse 3.2s ease-in-out infinite;
+}
+
+.promo-track{
+  display:flex;
+  gap: 3rem;
+  align-items:center;
+  white-space: nowrap;
+  padding: .85rem 1.2rem;
+  font-weight: 600;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  letter-spacing: .2px;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+/* each repeated segment so the loop looks seamless */
+.promo-segment{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+}
+.promo-segment strong{
+  text-shadow: 0 2px 10px rgba(255,255,255,.35);
+}
+
+.promo-banner:hover .promo-track,
+.promo-banner:focus-within .promo-track{
+  animation-play-state: paused;
+}
+
+.promo-banner{
+  animation: bannerSlide .6s ease-out both;
+}
+
+.header {
+  text-align: center;
+  padding: 3rem 1rem 4rem;
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  color: #fff;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: 0 6px 20px rgba(255, 99, 71, 0.3);
+}
+
+.title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(90deg, var(--title-shine-a), var(--title-shine-b), var(--title-shine-a));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  color: #ffece2;
+  opacity: 0.9;
+}
+
+.header:hover {
+  background: linear-gradient(135deg, #ff944c, #ff4778);
+  box-shadow: 0 8px 25px rgba(255, 76, 41, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* ===== Keyframes ===== */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes bannerSlide {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes glowPulse {
+  0%,100% { opacity:.8; }
+  50%     { opacity:1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner,
+  .promo-track { animation: none !important; }
+}
