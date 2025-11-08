@@ -1,7 +1,7 @@
 import React from "react";
 import "./header.css";
 
-function Header() {
+function Header({title , subtitle}) {
   return (
     <>
       <div className="promo-banner" role="region" aria-label="Promotion">
@@ -22,8 +22,8 @@ function Header() {
       </div>
 
       <header className="header">
-        <h1 className="title">Weijie&apos;s Pizza Co.</h1>
-        <p className="tagline">Freshly baked. Always made with passion</p>
+        <h1 className="title">{title}</h1>
+        <p className="tagline">{subtitle}</p>
       </header>
     </>
   );

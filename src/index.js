@@ -13,7 +13,7 @@ import ThemeFab from "./Component/ThemeFab";   // if you added the dark-mode but
 function App() {
   return (
     <div>
-      <Header />
+      <Header title={"Weijie's Pizza Co."} subtitle={"Freshly baked. Always made with passion"}/>
       <Menu />
       <PizzaMenu />
       <Footer />

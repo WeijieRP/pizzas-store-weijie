@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./pizza.css";
 import { pizzaData } from "./Data/data"; // make sure this path matches your structure
 
-export default function PizzaMenu({ title = "Our Menu" }) {
+export default function PizzaMenu() {
   const [cart, setCart] = useState([]);
   const [query, setQuery] = useState("");
   const [sortBy, setSortBy] = useState("name-asc");
@@ -104,14 +104,6 @@ export default function PizzaMenu({ title = "Our Menu" }) {
 
   return (
     <section className="pizza-section">
-      {/* Header */}
-      <div className="pizza-header">
-        <h2 className="pizza-title">{title}</h2>
-        <p className="pizza-sub">
-          Handcrafted pizzas made fresh daily — crispy crust, melty cheese, and bold flavours you’ll love.
-        </p>
-      </div>
-
       {/* Controls */}
       <div className="pizza-controls">
         <input
